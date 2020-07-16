@@ -1,0 +1,2 @@
+inherit_from:
+  - https://git.io/klaxit-rubocop

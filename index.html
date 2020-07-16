@@ -1,0 +1,47 @@
+<style>
+    .stats > .icon {
+        height: 44px;
+        border: 3px solid #0a0a0a;
+        border-radius: 3px;
+        float: left;
+        margin-right: 4px;
+    }
+    .stats {
+        display: inline-block;
+        width: 100%;
+        margin: 4px 0;
+    }
+</style>
+
+<script src="https://unpkg.com/vue@2.6.10"></script>
+<script src="https://unpkg.com/lodash@4.17.15"></script>
+<div id="app">
+    <section>
+        <h1>Winrate per brawler</h1>
+        <ul>
+            <li v-for="(stats, brawler) in winratePerBrawler3v3">
+                <div class="stats brawler-stats">
+                    <img class="icon brawler-icon" :src="urlFor('brawler-bs/', upcaseToTitle(brawler) + ' 100')" :alt="brawler">
+                    <div>{{ brawler }}: {{ stats.winrate | percent }}%</div>
+                    <div>{{ stats.victory }} victories / {{ stats.defeat }} defeats</div>
+                <div class="clearfix"></div>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h1>Winrate per game mode</h1>
+        <ul>
+            <li v-for="(stats, mode) in winratePerGameMode">
+                <div class="stats mode-stats">
+                    <img class="icon" :src="urlFor('gamemode/', camelcaseToTitle(mode))" :alt="mode">
+                    <div v-if="stats.rank">
+                        {{ mode }}: {{ _.round(stats.rank, 1) }}
+                    </div>
+                    <div v-else>{{ mode }}: {{ stats.winrate | percent }}%</div>
+                </div>
+            </li>
+        </ul>
+    </section>
+</div>
+<script src="index.js"></script>
